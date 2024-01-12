@@ -21,6 +21,9 @@ composer.phar
 # composer lock
 composer.lock
 
+# database
+/dbdata
+
 # Mac DS_Store Files
 .DS_Store
 

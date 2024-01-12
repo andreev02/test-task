@@ -1,9 +1,35 @@
-version: '2'
+version: '3'
+
 services:
-  php:
-    image: yiisoftware/yii2-php:7.4-apache
+  nginx:
+    image: nginx:latest
     volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+      - ./:/var/www
+      - ./_docker/nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - '8000:80'
+      - "8876:80"
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: .
+      dockerfile: _docker/app/Dockerfile
+    volumes:
+      - ./:/var/www
+
+  redis:
+    image: redis:latest
+
+  mysql_db:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: stage
+      MYSQL_USER: example
+      MYSQL_PASSWORD: secret2
+    volumes:
+      - ./dbdata:/var/lib/mysql/
