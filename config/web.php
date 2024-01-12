@@ -52,6 +52,12 @@ $config = [
         ],
     ],
     'params' => $params,
+    'modules' => [
+        'order' => [
+            'class' => 'app\modules\order\Module',
+            // ... другие настройки модуля ...
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
