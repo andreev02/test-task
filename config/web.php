@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'en-US',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -43,6 +44,8 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => ['en-*', 'ru-*'],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
@@ -53,9 +56,9 @@ $config = [
     ],
     'params' => $params,
     'modules' => [
-        'order' => [
-            'class' => 'app\modules\order\Module',
-            // ... другие настройки модуля ...
+        'orders' => [
+            'class' => 'app\modules\orders\Module',
+            // ...
         ],
     ],
 ];

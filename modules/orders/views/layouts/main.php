@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\modules\orders\Module;
 
 AppAsset::register($this);
 
@@ -53,7 +54,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
     <div class="collapse navbar-collapse" id="bs-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Orders</a></li>
+        <li class="active"><a href="#"><?php echo Module::t('common', 'Orders') ?></a></li>
       </ul>
     </div>
   </div>

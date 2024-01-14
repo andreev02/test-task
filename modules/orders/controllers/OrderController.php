@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\order\controllers;
+namespace app\modules\orders\controllers;
 
 use yii\web\Controller;
 
