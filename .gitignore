@@ -22,7 +22,7 @@ composer.phar
 composer.lock
 
 # database
-/dbdata
+_docker/dbdata
 
 # Mac DS_Store Files
 .DS_Store
