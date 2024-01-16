@@ -5,7 +5,6 @@ namespace app\modules\orders\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
-use app\modules\orders\models\Order;
 use app\modules\orders\models\Service;
 use app\modules\orders\models\OrderSearch;
 
@@ -18,36 +17,47 @@ class OrderController extends Controller
      */
     public function actionIndex()
     {    
+        $data = Yii::$app->request->get();
+
+        /**
+         * Orders.
+         */
         $searchModel = new OrderSearch([]);
-        $dataProvider = $searchModel->search(Yii::$app->request->get());
+        $dataProvider = $searchModel->search($data);
 
         $query = $dataProvider->query;
 
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        
+        $pageQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $pageQuery->count(), 'pageSize' => 100, 'pageSizeParam' => false]);
+        // dd($pages);
+
         $orders = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
-        $services = Service::find()->all();
+        /**
+         * Services.
+         */
+        $totalCounter = 0;
 
-        $counters = [];
-        foreach($orders as $order) {
-            if (!key_exists($order->service->id, $counters)) {
-                $counters[$order->service->id] = 1;
-                continue;
-            }
-            $counters[$order->service->id]++;
+        unset($data['service']);
+        $searchModel = new OrderSearch([]);
+        $dataProvider = $searchModel->search($data);
+
+        $allOrders = $dataProvider->query->all();
+
+        $services = Service::find()->all();
+        foreach($allOrders as $currOrder) {
+            $totalCounter++;
+            $services[$currOrder->service_id-1]->counter++;
         }
 
         $this->layout = 'main';
         return $this->render('index', [
             'orders' => $orders,
             'services' => $services,
-            'counters' => $counters,
-            'pages' => $pages,
-            'dataProvider' => $dataProvider,
+            'totalCounter' => $totalCounter,
+            'pages' => $pages,            
             'searchModel' => $searchModel,
         ]);
     }

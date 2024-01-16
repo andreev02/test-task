@@ -2,10 +2,9 @@
 
 namespace app\modules\orders\models;
 
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-class OrderSearch extends Model
+class OrderSearch extends Order
 {
     public $status;
     public $mode;
@@ -17,14 +16,13 @@ class OrderSearch extends Model
     {
         return [
             [['status', 'mode', 'service', 'search_type'], 'integer'],
-            // [['search_type'], 'compare', 'compareAttribute' => 'search'],
             [['search'], 'string'],
         ];
     }
 
     public function scenarios()
     {
-        return Model::scenarios();
+        return Order::scenarios();
     }
 
     public function search($params)
@@ -52,7 +50,7 @@ class OrderSearch extends Model
         }
 
         if ($this->search_type == 3) {
-
+            $query->joinWith('user')->andFilterWhere(['like', 'CONCAT(users.first_name, users.last_name)', '%'.$this->search.'%', false]);
         }
 
         return $dataProvider;

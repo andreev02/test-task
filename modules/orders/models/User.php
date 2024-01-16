@@ -15,4 +15,9 @@ class User extends ActiveRecord
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, ['user_id' => 'id']);
+    }
 }
