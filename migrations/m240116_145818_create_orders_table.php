@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%orders}}`.
  */
-class m3_create_orders_table extends Migration
+class m240116_145818_create_orders_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -27,7 +27,7 @@ class m3_create_orders_table extends Migration
             'fk-order-author_id',
             'orders',
             'user_id',
-            'user',
+            'users',
             'id',
             'CASCADE'
         );

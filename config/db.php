@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=172.27.0.2;dbname=stage',
+    'dsn' => 'mysql:host=mysql_db;dbname=stage',
     'username' => 'root',
     'password' => 'secret',
     'charset' => 'utf8',
