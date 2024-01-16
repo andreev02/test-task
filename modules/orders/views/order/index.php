@@ -22,8 +22,9 @@ $this->title = 'My Yii application';
             <li <?php if($status === '4') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Error'), Url::to(['order/index', 'status' => 4]))?></li>
 
             <li class="pull-right custom-search">
-                <form class="form-inline" action="/orders/order/index" method="get">
+                <form class="form-inline" <?php echo "action='" . Url::to(['order/index']) . "'"?> method="get">
                     <div class="input-group">
+                        <input class='hidden' name="status" value=<?php echo $status?>></input>
                         <input type="text" name="search" class="form-control" <?php echo "placeholder='" . Module::t('body', 'Search orders') . "'"?>
                             <?php echo "value='{$searchModel->search}'" ?>>
                         <span class="input-group-btn search-select-wrap">
