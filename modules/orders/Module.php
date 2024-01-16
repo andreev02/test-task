@@ -23,6 +23,9 @@ class Module extends \yii\base\Module
             'basePath' => '@app/modules/orders/messages',
             'fileMap' => [
                 'modules/orders/common' => 'common.php',
+                'modules/orders/header' => 'header.php',
+                'modules/orders/body' => 'body.php',
+                'modules/orders/mode' => 'mode.php',
             ],
         ];
     }

@@ -4,5 +4,5 @@
 * Translation map for ru
 */
 return [
-    'Orders' => 'Заказы'
+    'Orders' => 'Заказы',
 ];
