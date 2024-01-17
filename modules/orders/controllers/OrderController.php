@@ -4,6 +4,7 @@ namespace orders\controllers;
 
 use Yii;
 use yii\web\Controller;
+use orders\services\FileService;
 use orders\services\OrderService;
 use orders\services\ServiceService;
 
@@ -20,7 +21,7 @@ class OrderController extends Controller
      * @return string
      */
     public function actionIndex()
-    {        
+    {       
         $data = Yii::$app->request->get();
 
         return $this->render('index', [
@@ -29,5 +30,19 @@ class OrderController extends Controller
             'pages' => $pages,
             'searchModel' => $searchModel,
         ]);
+    }
+
+    public function actionDownload()
+    {
+        // dd(Yii::$app->request->get());
+        $orders = OrderService::getFilteredOrders(Yii::$app->request->get());
+
+        $body = "";
+        foreach($orders as $order)
+        {
+            $body .= $order->convertToCsv() . PHP_EOL;
+        }
+        
+        FileService::SendCsvFile("Orders-" . date("Y-m-d H:i:s"), $body);
     }
 }

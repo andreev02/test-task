@@ -64,7 +64,7 @@ class ServiceSearch extends Service
         $query->andFilterWhere(['=', 'orders.mode', $this->mode]);
 
         if ($this->search_type == self::SEARCH_TYPE_ID) {
-            $query->andFilterWhere(['=', 'id', intval($this->search)]);
+            $query->andFilterWhere(['=', 'orders.id', intval($this->search)]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_LINK) {

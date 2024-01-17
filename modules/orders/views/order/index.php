@@ -3,6 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\bootstrap5\Button;
 use orders\Module;
 
 $status = Yii::$app->request->get('status');
@@ -39,6 +40,11 @@ $this->title = 'My Yii application';
                 </form>
             </li>
         </ul>
+
+        <?php
+            echo Html::a(Module::t('common', 'Download'), Url::to(array_merge(['/orders/order/download'], $_GET)));
+        ?>
+
         <table class="table order-table">
             <thead>
                 <tr>

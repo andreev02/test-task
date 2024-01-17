@@ -2,12 +2,14 @@
 
 namespace orders\models;
 
+use Yii;
 use yii\db\ActiveRecord;
+use orders\models\interfaces\ConvertInterface;
 
 /**
  * Order
  */
-class Order extends ActiveRecord
+class Order extends ActiveRecord implements ConvertInterface
 {
     const STATUS_PENDING    = 0;
     const STATUS_INPROGRESS = 1;
@@ -69,5 +71,16 @@ class Order extends ActiveRecord
     public function getModeName()
     {
         return $this->mode ? 'Auto' : 'Manual';
+    }
+    
+    /**
+     * ConvertToCvs
+     *
+     * @return string
+     */
+    public function convertToCsv()
+    {
+        $date = Yii::$app->formatter->asDate($this->created_at, 'yyyy-mm-dd hh-mm-ss');
+        return "{$this->id},{$this->user->name},{$this->link},{$this->quantity},{$this->service->name},{$this->statusName},{$this->modeName},{$date}";
     }
 }

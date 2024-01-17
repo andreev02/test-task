@@ -9,7 +9,21 @@ use orders\models\OrderSearch;
  * OrderService
  */
 class OrderService
-{    
+{         
+    /**
+     * getFilteredOrders
+     *
+     * @param  mixed $params
+     * @return array
+     */
+    public static function getFilteredOrders($params)
+    {
+        $searchModel = new OrderSearch([]);
+        $dataProvider = $searchModel->search($params);
+
+        return $dataProvider->query->all();
+    }
+    
     /**
      * getPaginatedOrders
      *

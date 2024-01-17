@@ -5,4 +5,5 @@
 */
 return [
     'Orders' => 'Заказы',
+    'Download' => 'Скачать'
 ];
