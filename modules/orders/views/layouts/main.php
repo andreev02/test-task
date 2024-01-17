@@ -6,7 +6,7 @@
 use app\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use app\modules\orders\Module;
+use orders\Module;
 
 AppAsset::register($this);
 

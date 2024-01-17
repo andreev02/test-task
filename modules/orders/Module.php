@@ -1,20 +1,33 @@
 <?php
 
-namespace app\modules\orders;
+namespace orders;
 
 use Yii;
 
+/**
+ * Module
+ */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\orders\controllers';
-
+    public $controllerNamespace = '\orders\controllers';
+    
+    /**
+     * init
+     *
+     * @return void
+     */
     public function init()
     {
         parent::init();
         \Yii::configure($this, require __DIR__ . '/config.php');
         $this->registerTranslations();
     }
-
+    
+    /**
+     * registerTranslations
+     *
+     * @return void
+     */
     public function registerTranslations()
     {
         Yii::$app->i18n->translations['modules/orders/*'] = [
@@ -29,7 +42,16 @@ class Module extends \yii\base\Module
             ],
         ];
     }
-
+    
+    /**
+     * t
+     *
+     * @param  mixed $category
+     * @param  mixed $message
+     * @param  mixed $params
+     * @param  mixed $language
+     * @return void
+     */
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('modules/orders/' . $category, $message, $params, $language);

@@ -3,7 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-use app\modules\orders\Module;
+use orders\Module;
 
 $status = Yii::$app->request->get('status');
 
@@ -53,7 +53,7 @@ $this->title = 'My Yii application';
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li <?php if(Yii::$app->request->get('service') === null) echo "class='active'"?>><?php echo Html::a(Html::decode(Module::t('body', 'All') . ' (' . $totalCounter . ')'), Url::current(['service' => null]))?></li>
+                                <li <?php if(Yii::$app->request->get('service') === null) echo "class='active'"?>><?php echo Html::a(Html::decode(Module::t('body', 'All') . ' (' . array_sum(array_column($services, 'counter')) . ')'), Url::current(['service' => null]))?></li>
                                 <?php foreach($services as $service): ?>
                                     <li <?php if(Yii::$app->request->get('service') == $service->id) echo "class='active'"?>
                                         <?php echo $service->counter == 0 ? "class='disabled'" : ''?>>

@@ -5,9 +5,9 @@ namespace orders\models;
 use yii\data\ActiveDataProvider;
 
 /**
- * OrderSearch
+ * ServiceSearch
  */
-class OrderSearch extends Order
+class ServiceSearch extends Service
 {
     const SEARCH_TYPE_ID        = 1;
     const SEARCH_TYPE_LINK      = 2;
@@ -39,7 +39,7 @@ class OrderSearch extends Order
      */
     public function scenarios()
     {
-        return Order::scenarios();
+        return Service::scenarios();
     }
     
     /**
@@ -50,7 +50,7 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Service::find()->joinWith('orders');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,16 +60,15 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['=', 'status', $this->status]);
-        $query->andFilterWhere(['=', 'mode', $this->mode]);
-        $query->andFilterWhere(['=', 'service_id', $this->service]);
+        $query->andFilterWhere(['=', 'orders.status', $this->status]);
+        $query->andFilterWhere(['=', 'orders.mode', $this->mode]);
 
         if ($this->search_type == self::SEARCH_TYPE_ID) {
             $query->andFilterWhere(['=', 'id', intval($this->search)]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_LINK) {
-            $query->andFilterWhere(['like', 'link', '%'.$this->search.'%', false]);
+            $query->andFilterWhere(['like', 'orders.link', '%'.$this->search.'%', false]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_USERNAME) {
