@@ -73,7 +73,7 @@ class OrderSearch extends Order
         }
 
         if ($this->search_type == self::SEARCH_TYPE_USERNAME) {
-            $query->joinWith('user')->andFilterWhere(['like', 'CONCAT(users.first_name, users.last_name)', '%'.$this->search.'%', false]);
+            $query->joinWith('user')->andFilterWhere(['like', "CONCAT(users.first_name, ' ',  users.last_name)", '%'.$this->search.'%', false]);
         }
 
         return $dataProvider;

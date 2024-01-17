@@ -9,21 +9,7 @@ use orders\models\OrderSearch;
  * OrderService
  */
 class OrderService
-{         
-    /**
-     * getFilteredOrders
-     *
-     * @param  mixed $params
-     * @return array
-     */
-    public static function getFilteredOrders($params)
-    {
-        $searchModel = new OrderSearch([]);
-        $dataProvider = $searchModel->search($params);
-
-        return $dataProvider->query->all();
-    }
-    
+{
     /**
      * getPaginatedOrders
      *
@@ -61,7 +47,17 @@ class OrderService
      */
     public static function getOrdersCsvString($params)
     {
-        $orders = self::getFilteredOrders($params);
+        $searchModel = new OrderSearch([]);
+        $dataProvider = $searchModel->search($params);
+
+        $orders = $dataProvider->query
+            ->joinWith('user')
+            ->joinWith('service')
+            ->select([
+                "orders.*",
+                "CONCAT(users.first_name, ' ', users.last_name) as username",
+                "services.name as serviceName"
+            ])->all();
 
         $body = "";
         foreach($orders as $order)

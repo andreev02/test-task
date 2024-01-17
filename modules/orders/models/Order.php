@@ -16,6 +16,9 @@ class Order extends ActiveRecord implements ConvertInterface
     const STATUS_COMPLETED  = 2;
     const STATUS_CANCELED   = 3;
     const STATUS_ERROR      = 4;
+   
+    public $username = null;
+    public $serviceName;
     
     /**
      * tableName
@@ -80,7 +83,11 @@ class Order extends ActiveRecord implements ConvertInterface
      */
     public function convertToCsv()
     {
+        $username = $this->username ?? $this->user->name;
+        $serviceName = $this->serviceName ?? $this->service->name;
+
         $date = Yii::$app->formatter->asDate($this->created_at, 'yyyy-mm-dd hh-mm-ss');
-        return "{$this->id},{$this->user->name},{$this->link},{$this->quantity},{$this->service->name},{$this->statusName},{$this->modeName},{$date}";
+
+        return "{$this->id},{$username},{$this->link},{$this->quantity},{$serviceName},{$this->statusName},{$this->modeName},{$date}";
     }
 }

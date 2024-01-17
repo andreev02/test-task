@@ -72,7 +72,7 @@ class ServiceSearch extends Service
         }
 
         if ($this->search_type == self::SEARCH_TYPE_USERNAME) {
-            $query->leftJoin('users', 'orders.user_id = users.id')->andFilterWhere(['like', 'CONCAT(users.first_name, users.last_name)', '%'.$this->search.'%', false]);
+            $query->leftJoin('users', 'orders.user_id = users.id')->andFilterWhere(['like', "CONCAT(users.first_name, ' ', users.last_name)", '%'.$this->search.'%', false]);
         }
 
         return $dataProvider;
