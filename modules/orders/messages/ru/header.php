@@ -7,7 +7,7 @@ return [
     'All orders' => 'Все заказы',
     'Pending' => 'В ожидании',
     'In progress' => 'В обработке',
-    'Complited' => 'Завершённые',
+    'Completed' => 'Завершённые',
     'Canceled' => 'Отменённые',
     'Error' => 'Ошибка'
 ];

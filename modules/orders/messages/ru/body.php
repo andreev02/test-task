@@ -21,7 +21,7 @@ return [
 
     'Pending' => 'В ожидании',
     'In progress' => 'В обработке',
-    'Complited' => 'Завершён',
+    'Completed' => 'Завершён',
     'Canceled' => 'Отменён',
     'Error' => 'Ошибка',
 

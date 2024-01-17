@@ -17,7 +17,7 @@ $this->title = 'My Yii application';
             <li <?php if($status === null) echo "class='active'"?>><?php echo Html::a(Module::t('header', 'All orders'), Url::to(['order/index']))?></li>
             <li <?php if($status === '0') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Pending'), Url::to(['order/index', 'status' => 0]))?></li>
             <li <?php if($status === '1') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'In progress'), Url::to(['order/index', 'status' => 1]))?></li>
-            <li <?php if($status === '2') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Complited'), Url::to(['order/index', 'status' => 2]))?></li>
+            <li <?php if($status === '2') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Completed'), Url::to(['order/index', 'status' => 2]))?></li>
             <li <?php if($status === '3') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Canceled'), Url::to(['order/index', 'status' => 3]))?></li>
             <li <?php if($status === '4') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Error'), Url::to(['order/index', 'status' => 4]))?></li>
 
