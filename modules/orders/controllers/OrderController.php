@@ -26,8 +26,9 @@ class OrderController extends Controller
 
         return $this->render('index', [
             'orders' => OrderService::getPaginatedOrders($data, 100, $pages, $searchModel),
-            'services' => ServiceService::getCountedServices($data),
+            'services' => ServiceService::getCountedServices($data, $totalCounter),
             'pages' => $pages,
+            'totalCounter' => $totalCounter,
             'searchModel' => $searchModel,
         ]);
     }

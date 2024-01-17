@@ -15,7 +15,7 @@ class ServiceService
      * @param  mixed $params
      * @return array
      */
-    public static function getCountedServices($params)
+    public static function getCountedServices($params, &$totalCounter = null)
     {
         $searchModel = new ServiceSearch([]);
         $dataProvider = $searchModel->search($params);
@@ -24,6 +24,8 @@ class ServiceService
             ->select(['COUNT(*) as counter', 'services.*'])
             ->groupBy('services.id')
             ->all();
+
+        $totalCounter = array_sum(array_column($services, 'counter'));
 
         return $services;
     }

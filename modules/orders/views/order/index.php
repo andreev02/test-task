@@ -6,6 +6,24 @@ use yii\widgets\LinkPager;
 use yii\bootstrap5\Button;
 use orders\Module;
 
+const STATUS_PENDING    = '0';
+const STATUS_INPROGRESS = '1';
+const STATUS_COMPLETED  = '2';
+const STATUS_CANCELED   = '3';
+const STATUS_ERROR      = '4';
+
+const MODE_MANUAL       = '0';
+const MODE_AUTO         = '1';
+
+$headers = [
+    ['name' => 'All orders', 'index' => null],
+    ['name' => 'Pending', 'index' => STATUS_PENDING],
+    ['name' => 'In progress', 'index' => STATUS_INPROGRESS],
+    ['name' => 'Completed', 'index' => STATUS_COMPLETED],
+    ['name' => 'Canceled', 'index' => STATUS_CANCELED],
+    ['name' => 'Error', 'index' => STATUS_ERROR],
+];
+
 $status = Yii::$app->request->get('status');
 
 $this->title = 'My Yii application';
@@ -14,13 +32,10 @@ $this->title = 'My Yii application';
 
     <div class="container-fluid">
         <ul class="nav nav-tabs p-b">
-            
-            <li <?php if($status === null) echo "class='active'"?>><?php echo Html::a(Module::t('header', 'All orders'), Url::to(['order/index']))?></li>
-            <li <?php if($status === '0') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Pending'), Url::to(['order/index', 'status' => 0]))?></li>
-            <li <?php if($status === '1') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'In progress'), Url::to(['order/index', 'status' => 1]))?></li>
-            <li <?php if($status === '2') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Completed'), Url::to(['order/index', 'status' => 2]))?></li>
-            <li <?php if($status === '3') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Canceled'), Url::to(['order/index', 'status' => 3]))?></li>
-            <li <?php if($status === '4') echo "class='active'"?>><?php echo Html::a(Module::t('header', 'Error'), Url::to(['order/index', 'status' => 4]))?></li>
+
+            <?php foreach($headers as $header): ?>    
+                <li <?php if($status === $header['index']) echo "class='active'"?>><?php echo Html::a(Module::t('header', $header['name']), Url::to(['order/index', 'status' => $header['index']]))?></li>
+            <?php endforeach; ?>
 
             <li class="pull-right custom-search">
                 <form class="form-inline" <?php echo "action='" . Url::to(['order/index']) . "'"?> method="get">
@@ -59,7 +74,7 @@ $this->title = 'My Yii application';
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li <?php if(Yii::$app->request->get('service') === null) echo "class='active'"?>><?php echo Html::a(Html::decode(Module::t('body', 'All') . ' (' . array_sum(array_column($services, 'counter')) . ')'), Url::current(['service' => null]))?></li>
+                                <li <?php if(Yii::$app->request->get('service') === null) echo "class='active'"?>><?php echo Html::a(Html::decode(Module::t('body', 'All') . ' (' . $totalCounter . ')'), Url::current(['service' => null]))?></li>
                                 <?php foreach($services as $service): ?>
                                     <li <?php if(Yii::$app->request->get('service') == $service->id) echo "class='active'"?>
                                         <?php echo $service->counter == 0 ? "class='disabled'" : ''?>>
@@ -78,8 +93,8 @@ $this->title = 'My Yii application';
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li <?php if(Yii::$app->request->get('mode') === null) echo "class='active'"?>><?php echo Html::a(Module::t('mode', 'All'), Url::current(['mode' => null]))?></li>
-                                <li <?php if(Yii::$app->request->get('mode') === '0') echo "class='active'"?>><?php echo Html::a(Module::t('mode', 'Manual'), Url::current(['mode' => 0]))?></li>
-                                <li <?php if(Yii::$app->request->get('mode') === '1') echo "class='active'"?>><?php echo Html::a(Module::t('mode', 'Auto'), Url::current(['mode' => 1]))?></li>
+                                <li <?php if(Yii::$app->request->get('mode') === MODE_MANUAL) echo "class='active'"?>><?php echo Html::a(Module::t('mode', 'Manual'), Url::current(['mode' => MODE_MANUAL]))?></li>
+                                <li <?php if(Yii::$app->request->get('mode') === MODE_AUTO) echo "class='active'"?>><?php echo Html::a(Module::t('mode', 'Auto'), Url::current(['mode' => MODE_AUTO]))?></li>
                             </ul>
                         </div>
                     </th>
