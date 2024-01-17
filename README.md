@@ -26,4 +26,4 @@ To install dump connect to mysql:
     user: root
     password: secret
 
-Enjoy on http://localhost:8876/orders/order
+Enjoy on http://localhost:8876/
