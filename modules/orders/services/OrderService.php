@@ -53,4 +53,22 @@ class OrderService
 
         return $orders;
     }
+    
+    /**
+     * getOrdersCsvString
+     *
+     * @return string
+     */
+    public static function getOrdersCsvString($params)
+    {
+        $orders = self::getFilteredOrders($params);
+
+        $body = "";
+        foreach($orders as $order)
+        {
+            $body .= $order->convertToCsv() . PHP_EOL;
+        }
+
+        return $body;
+    }
 }

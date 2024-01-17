@@ -31,17 +31,15 @@ class OrderController extends Controller
             'searchModel' => $searchModel,
         ]);
     }
-
+    
+    /**
+     * Download CSV file.
+     *
+     * @return void
+     */
     public function actionDownload()
     {
-        // dd(Yii::$app->request->get());
-        $orders = OrderService::getFilteredOrders(Yii::$app->request->get());
-
-        $body = "";
-        foreach($orders as $order)
-        {
-            $body .= $order->convertToCsv() . PHP_EOL;
-        }
+        $body = OrderService::getOrdersCsvString(Yii::$app->request->get());
         
         FileService::SendCsvFile("Orders-" . date("Y-m-d H:i:s"), $body);
     }
