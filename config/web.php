@@ -50,7 +50,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                // ...
+                'posts' => 'orders/order/index',
             ],
         ],
     ],
