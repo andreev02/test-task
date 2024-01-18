@@ -37,6 +37,7 @@ class OrderService
         ]);
 
         $orders = $query
+            ->orderBy(['orders.id' => SORT_DESC])
             ->offset($this->pagination->offset)
             ->limit($this->pagination->limit)
             ->all();
