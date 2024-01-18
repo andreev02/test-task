@@ -24,12 +24,15 @@ class OrderController extends Controller
     {       
         $data = Yii::$app->request->get();
 
+        $orderService = new OrderService();
+        $serviceService = new ServiceService();
+
         return $this->render('index', [
-            'orders' => OrderService::getPaginatedOrders($data, 100, $pages, $searchModel),
-            'services' => ServiceService::getCountedServices($data, $totalCounter),
-            'pages' => $pages,
-            'totalCounter' => $totalCounter,
-            'searchModel' => $searchModel,
+            'services' => $serviceService->getCountedServices($data),
+            'totalCounter' => $serviceService->totalCounter,
+            'orders' => $orderService->getPaginatedOrders($data, 100),
+            'pages' => $orderService->pagination,
+            'searchModel' => $orderService->searchModel,
         ]);
     }
     
@@ -40,7 +43,7 @@ class OrderController extends Controller
      */
     public function actionDownload()
     {
-        $content = OrderService::getOrdersCsvString(Yii::$app->request->get());
+        $content = (new OrderService())->getOrdersCsvString(Yii::$app->request->get());
         
         return FileService::sendCsvFile("Orders-" . date("Y-m-d H:i:s"), $content);
     }

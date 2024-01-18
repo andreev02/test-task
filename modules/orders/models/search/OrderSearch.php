@@ -1,13 +1,13 @@
 <?php
 
-namespace orders\models;
+namespace orders\models\search;
 
-use yii\data\ActiveDataProvider;
+use orders\models\Order;
 
 /**
- * ServiceSearch
+ * OrderSearch
  */
-class ServiceSearch extends Service
+class OrderSearch extends Order
 {
     const SEARCH_TYPE_ID        = 1;
     const SEARCH_TYPE_LINK      = 2;
@@ -39,7 +39,7 @@ class ServiceSearch extends Service
      */
     public function scenarios()
     {
-        return Service::scenarios();
+        return Order::scenarios();
     }
     
     /**
@@ -50,31 +50,28 @@ class ServiceSearch extends Service
      */
     public function search($params)
     {
-        $query = Service::find()->joinWith('orders', false);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $query = Order::find();
 
         if (!($this->load($params, '') && $this->validate())) {
-            return $dataProvider;
+            return $query;
         }
 
-        $query->andFilterWhere(['=', 'orders.status', $this->status]);
-        $query->andFilterWhere(['=', 'orders.mode', $this->mode]);
+        $query->andFilterWhere(['=', 'status', $this->status]);
+        $query->andFilterWhere(['=', 'mode', $this->mode]);
+        $query->andFilterWhere(['=', 'service_id', $this->service]);
 
         if ($this->search_type == self::SEARCH_TYPE_ID) {
-            $query->andFilterWhere(['=', 'orders.id', intval($this->search)]);
+            $query->andFilterWhere(['=', 'id', intval($this->search)]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_LINK) {
-            $query->andFilterWhere(['like', 'orders.link', '%'.$this->search.'%', false]);
+            $query->andFilterWhere(['like', 'link', '%'.$this->search.'%', false]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_USERNAME) {
-            $query->leftJoin('users', 'orders.user_id = users.id')->andFilterWhere(['like', "CONCAT(users.first_name, ' ', users.last_name)", '%'.$this->search.'%', false]);
+            $query->joinWith('user', false)->andFilterWhere(['like', "CONCAT(users.first_name, ' ',  users.last_name)", '%'.$this->search.'%', false]);
         }
 
-        return $dataProvider;
+        return $query;
     }
 }

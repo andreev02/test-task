@@ -3,13 +3,17 @@
 namespace orders\services;
 
 use yii\data\Pagination;
-use orders\models\OrderSearch;
+use orders\models\search\OrderSearch;
 
 /**
  * OrderService
  */
 class OrderService
 {
+    public $pageSize;
+    public $pagination;
+    public $searchModel;
+
     /**
      * getPaginatedOrders
      *
@@ -19,22 +23,22 @@ class OrderService
      * @param  mixed $searchModel
      * @return array
      */
-    public static function getPaginatedOrders($params, $pageSize = null, &$pages = null, &$searchModel = null)
+    public function getPaginatedOrders($params, $pageSize = null)
     {
-        $searchModel = new OrderSearch([]);
-        $dataProvider = $searchModel->search($params);
-
-        $query = $dataProvider->query;
-
+        $this->searchModel = new OrderSearch([]);
+        $query = $this->searchModel->search($params);
+        
         $pageQuery = clone $query;
-        $pages = new Pagination([
+
+        $this->pagination = new Pagination([
             'totalCount' => $pageQuery->count(), 
             'pageSize' => $pageSize, 
             'pageSizeParam' => false
         ]);
 
-        $orders = $query->offset($pages->offset)
-            ->limit($pages->limit)
+        $orders = $query
+            ->offset($this->pagination->offset)
+            ->limit($this->pagination->limit)
             ->all();
 
         return $orders;
@@ -45,12 +49,12 @@ class OrderService
      *
      * @return string
      */
-    public static function getOrdersCsvString($params)
+    public function getOrdersCsvString($params)
     {
-        $searchModel = new OrderSearch([]);
-        $dataProvider = $searchModel->search($params);
+        $this->searchModel = new OrderSearch([]);
+        $query = $this->searchModel->search($params);
 
-        $orders = $dataProvider->query
+        $orders = $query
             ->joinWith('user', false)
             ->joinWith('service', false)
             ->select([

@@ -2,30 +2,33 @@
 
 namespace orders\services;
 
-use orders\models\ServiceSearch;
+use orders\models\search\ServiceSearch;
 
 /**
  * ServiceService
  */
 class ServiceService
 {    
+    public $searchModel;
+    public $totalCounter;
+
     /**
      * getCountedServices
      *
      * @param  mixed $params
      * @return array
      */
-    public static function getCountedServices($params, &$totalCounter = null)
+    public function getCountedServices($params)
     {
-        $searchModel = new ServiceSearch([]);
-        $dataProvider = $searchModel->search($params);
+        $this->searchModel = new ServiceSearch([]);
+        $query = $this->searchModel->search($params);
 
-        $services = $dataProvider->query
+        $services = $query
             ->select(['COUNT(*) as counter', 'services.*'])
             ->groupBy('services.id')
             ->all();
 
-        $totalCounter = array_sum(array_column($services, 'counter'));
+        $this->totalCounter = array_sum(array_column($services, 'counter'));
 
         return $services;
     }
