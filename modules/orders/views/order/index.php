@@ -9,14 +9,18 @@ use orders\components\ServiceDropdownWidget;
 use orders\components\ModeDropdownWidget;
 use orders\components\OrderGridWidget;
 
-const STATUS_PENDING    = '0';
-const STATUS_INPROGRESS = '1';
-const STATUS_COMPLETED  = '2';
-const STATUS_CANCELED   = '3';
-const STATUS_ERROR      = '4';
+const STATUS_PENDING        = '0';
+const STATUS_INPROGRESS     = '1';
+const STATUS_COMPLETED      = '2';
+const STATUS_CANCELED       = '3';
+const STATUS_ERROR          = '4';
 
-const MODE_MANUAL       = '0';
-const MODE_AUTO         = '1';
+const MODE_MANUAL           = '0';
+const MODE_AUTO             = '1';
+
+const SEARCH_TYPE_ID        = '1';
+const SEARCH_TYPE_LINK      = '2';
+const SEARCH_TYPE_USERNAME  = '3';
 
 $this->title = 'My Yii application';
 
@@ -26,13 +30,18 @@ $this->title = 'My Yii application';
     <div class="container-fluid">
 
         <?php echo NavBarWidget::widget([
-            'items' => [
+            'headers' => [
                 ['name' => Module::t('header', 'All orders'),   'route' => 'order/index', 'status' => null],                 
                 ['name' => Module::t('header', 'Pending'),      'route' => 'order/index', 'status' => STATUS_PENDING],     
                 ['name' => Module::t('header', 'In progress'),  'route' => 'order/index', 'status' => STATUS_INPROGRESS],  
                 ['name' => Module::t('header', 'Completed'),    'route' => 'order/index', 'status' => STATUS_COMPLETED],  
                 ['name' => Module::t('header', 'Canceled'),     'route' => 'order/index', 'status' => STATUS_CANCELED],   
                 ['name' => Module::t('header', 'Error'),        'route' => 'order/index', 'status' => STATUS_ERROR],  
+            ],
+            'selectors' => [
+                ['name' => Module::t('body', 'Order ID'),       'search_type' => SEARCH_TYPE_ID],
+                ['name' => Module::t('body', 'Link'),           'search_type' => SEARCH_TYPE_LINK],
+                ['name' => Module::t('body', 'Username'),       'search_type' => SEARCH_TYPE_USERNAME],
             ],
             'searchModel' => $searchModel
         ]); ?>

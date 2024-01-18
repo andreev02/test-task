@@ -7,7 +7,8 @@ use yii\helpers\Html;
 
 class NavBarWidget extends Widget
 {
-    public $items;
+    public $headers;
+    public $selectors;
     public $searchModel;
 
     public function init()
@@ -17,6 +18,6 @@ class NavBarWidget extends Widget
 
     public function run()
     {
-        return $this->render('navbar', ['headers' => $this->items, 'searchModel' => $this->searchModel]);
+        return $this->render('navbar', ['headers' => $this->headers, 'selectors' => $this->selectors, 'searchModel' => $this->searchModel]);
     }
 }

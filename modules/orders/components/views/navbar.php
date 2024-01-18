@@ -20,9 +20,9 @@
                     <?php echo "value='{$searchModel->search}'" ?>>
                 <span class="input-group-btn search-select-wrap">
                     <select class="form-control search-select" name="search_type">
-                        <option value="1" <?php if ($searchModel->search_type === '1') echo "selected=''" ?>><?php echo Module::t('body', 'Order ID')?></option>
-                        <option value="2" <?php if ($searchModel->search_type === '2') echo "selected=''" ?>><?php echo Module::t('body', 'Link')?></option>
-                        <option value="3" <?php if ($searchModel->search_type === '3') echo "selected=''" ?>><?php echo Module::t('body', 'Username')?></option>
+                        <?php foreach($selectors as $selector): ?>
+                            <option value=<?php echo $selector['search_type']?> <?php if ($searchModel->search_type === $selector['search_type']) echo "selected=''" ?>><?php echo $selector['name']?></option>
+                        <?php endforeach; ?>
                     </select>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </span>
