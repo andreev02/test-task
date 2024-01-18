@@ -2,6 +2,16 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use orders\Module;
+
+    function getServiceCounterById($services, $id)
+    {
+        foreach ($services as $service)
+        {
+            if ($service->id == $id) {
+                return $service->counter;
+            }
+        }
+    }
 ?>
 
 <?php foreach($orders as $order): ?>
@@ -11,7 +21,7 @@
     <td class="link"><?php echo $order->link?></td>
     <td><?php echo $order->quantity?></td>
     <td class="service">
-        <span class="label-id"><?php echo $services[$order->service->id-1]->counter?></span><?php echo $order->service->name?>
+        <span class="label-id"><?php echo getServiceCounterById($services, $order->service->id)?></span><?php echo $order->service->name?>
     </td>
     <td><?php echo Module::t('body', $order->statusName)?></td>
     <td><?php echo Module::t('mode', $order->modeName)?></td>

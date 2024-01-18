@@ -26,6 +26,7 @@ class ServiceService
         $services = $query
             ->select(['COUNT(*) as counter', 'services.*'])
             ->groupBy('services.id')
+            ->orderBy(['counter' => SORT_DESC])
             ->all();
 
         $this->totalCounter = array_sum(array_column($services, 'counter'));
