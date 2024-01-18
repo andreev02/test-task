@@ -50,7 +50,7 @@ class ServiceSearch extends Service
      */
     public function search($params)
     {
-        $query = Service::find()->joinWith('orders');
+        $query = Service::find()->joinWith('orders', false);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

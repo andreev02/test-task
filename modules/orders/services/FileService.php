@@ -4,7 +4,7 @@ namespace orders\services;
 
 class FileService
 {
-    public static function SendCsvFile($filename, $body)
+    public static function sendCsvFile($filename, $body)
     {        
         header('Content-type: text/csv');
         header('Content-Disposition: attachment; filename="'. $filename .'.csv"');

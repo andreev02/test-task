@@ -51,13 +51,13 @@ class OrderService
         $dataProvider = $searchModel->search($params);
 
         $orders = $dataProvider->query
-            ->joinWith('user')
-            ->joinWith('service')
+            ->joinWith('user', false)
+            ->joinWith('service', false)
             ->select([
                 "orders.*",
                 "CONCAT(users.first_name, ' ', users.last_name) as username",
                 "services.name as serviceName"
-            ])->all();
+            ])->each();
 
         $body = "";
         foreach($orders as $order)

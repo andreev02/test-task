@@ -40,8 +40,8 @@ class OrderController extends Controller
      */
     public function actionDownload()
     {
-        $body = OrderService::getOrdersCsvString(Yii::$app->request->get());
+        $content = OrderService::getOrdersCsvString(Yii::$app->request->get());
         
-        FileService::SendCsvFile("Orders-" . date("Y-m-d H:i:s"), $body);
+        return FileService::sendCsvFile("Orders-" . date("Y-m-d H:i:s"), $content);
     }
 }
