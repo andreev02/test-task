@@ -56,16 +56,16 @@ class OrderSearch extends Order
             return $query;
         }
 
-        $query->andFilterWhere(['=', 'status', $this->status]);
-        $query->andFilterWhere(['=', 'mode', $this->mode]);
-        $query->andFilterWhere(['=', 'service_id', $this->service]);
+        $query->andFilterWhere(['=', 'orders.status', $this->status]);
+        $query->andFilterWhere(['=', 'orders.mode', $this->mode]);
+        $query->andFilterWhere(['=', 'orders.service_id', $this->service]);
 
         if ($this->search_type == self::SEARCH_TYPE_ID) {
-            $query->andFilterWhere(['=', 'id', intval($this->search)]);
+            $query->andFilterWhere(['=', 'orders.id', intval($this->search)]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_LINK) {
-            $query->andFilterWhere(['like', 'link', '%'.$this->search.'%', false]);
+            $query->andFilterWhere(['like', 'orders.link', '%'.$this->search.'%', false]);
         }
 
         if ($this->search_type == self::SEARCH_TYPE_USERNAME) {
